@@ -115,6 +115,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        args = args.split()
         if args[0] not in HBNBCommand.classes:
             print("**class doesn't exist**")
             return
@@ -127,8 +128,6 @@ class HBNBCommand(cmd.Cmd):
                     print(f"**Invalid Parameter: {param}**")
                     continue
                 [key, value] = parts
-                print(f"key: {key}")
-                print(f"Value: {value}")
                 if value.startswith('"') and value.endswith('"'):
                     value = value.replace('_', ' ')
                 elif '.' in value:
