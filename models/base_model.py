@@ -6,9 +6,10 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
-id = Column(String(60), nullable=False, Primary_key=True)
+id = Column(String(60), nullable=False, primary_key=True)
 created_at = Column(nullable=False, default=datetime.now(timezone.utc))
 updated_at = Column(nullable=False, default=datetime.now(timezone.utc))
+
 
 class BaseModel:
     """A base class for all hbnb models"""

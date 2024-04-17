@@ -54,8 +54,8 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-        def delete(self, obj=None):
-            """delete objects if not none"""
-            if obj is not None:
-                key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                del self.__objects[key]
+    def delete(self, obj=None):
+        """delete objects if not none"""
+        if obj is not None:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            del self.__objects[key]
