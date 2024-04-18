@@ -2,7 +2,7 @@
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -11,8 +11,8 @@ Base = declarative_base()
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), nullable=False, primary_key=True)
-    created_at = Column(nullable=False, default=datetime.now(timezone.utc))
-    updated_at = Column(nullable=False, default=datetime.now(timezone.utc))
+    created_at = Column(default=datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(default=datetime.now(timezone.utc), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
@@ -23,13 +23,16 @@ class BaseModel:
             self.updated_at = datetime.now()
 
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            created_at = kwargs.get('created_at', datetime.now().isoformat())
+            updated_at = kwargs.get('updated_at', datetime.now().isoformat())
+            kwargs['created_at'] = datetime.strptime(
+                created_at, "%Y-%m-%dT%H:%M:%S.%f")
+            kwargs['updated_at'] = datetime.strptime(
+                updated_at, "%Y-%m-%dT%H:%M:%S.%f")
+            kwargs['id'] = kwargs.get('id', str(uuid.uuid4()))
 
             for key, value in kwargs.items():
-                if not hasattr(self, key):
+                if key != '__class__':
                     setattr(self, key, value)
 
     def __str__(self):

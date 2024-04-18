@@ -4,6 +4,7 @@
 Represents MySQL DB table
 """
 
+
 import os
 from models.base_model import Base
 
@@ -16,18 +17,15 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """
-        constructor
-        """
-        user = os.getenv('HBNB_MYSQL_USER')
-        passwd = os.getenv('HBNB_MYSQL_PWD')
-        host = os.getenv('HBNB_MYSQL_HOST', 'localhost')
-        db = os.getenv(HBNB_MYSQL_DB)
-
+        """Constructor"""
+        from sqlalchemy import create_engine
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{passwd}@{host}:3306/{db}',
-            pool_pre_ping=True
-        )
+            'mysql+mysqldb://{}:{}@{}:3306/{}'.format(
+                os.getenv('HBNB_MYSQL_USER'),
+                os.getenv('HBNB_MYSQL_PWD'),
+                os.getenv('HBNB_MYSQL_HOST'),
+                os.getenv('HBNB_MYSQL_DB')),
+            pool_pre_ping=True)
 
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
