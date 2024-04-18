@@ -54,20 +54,6 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    def create(self, class_name, **kwargs):
-        """
-        Create and store a new instance with given parameters
-        """
-        if class_name not in self.our_classes:
-            return None
-
-        else:
-            kwargs['updated_at'] = datetime.now().isoformat()
-            new_instance = self.our_classes[class_name](**kwargs)
-            self.new(new_instance)
-            self.save()
-            return new_instance
-
     def delete(self, obj=None):
         """delete objects if not none"""
         if obj is not None:
