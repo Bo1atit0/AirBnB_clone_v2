@@ -114,6 +114,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
+        # create Place city_id="0001" user_id="0001" name="My_little_house" latitude=37.773972
         """ Create an object of any class"""
         args = args.split()
         if args[0] not in HBNBCommand.classes:
