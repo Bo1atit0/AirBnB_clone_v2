@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# a Bash script that sets up your web servers for the deployment of web_static.
+
+# Install Nginx if it's not already installed
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# create folders
+sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
+
+# create fake html file
+echo "<html><head></head><body>My Fake Html File</body></html>" | sudo tee /data/web_static/releases/test/index.html
+
+# create a symlink
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+
+# set ownership
+sudo chown ubuntu:ubuntu /data/
+
+# Update Nginx configuration
+sudo sed -i 's|^.*server_name.*$|&\n\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n|' /etc/nginx/sites-available/default
+
+# Restart nginx
+sudo service nginx restart
+
+exit 0
