@@ -5,8 +5,9 @@ Write a Fabric script that generates a
 """
 
 from fabric.api import local
-from datetime import datetime 
+from datetime import datetime
 import os
+
 
 def do_pack():
     """Generates a .tgz archive from the contents of a web_static folder"""
