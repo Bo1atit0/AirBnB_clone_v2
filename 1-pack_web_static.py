@@ -31,4 +31,3 @@ def do_pack():
         return None
     else:
         return archive_path
-
